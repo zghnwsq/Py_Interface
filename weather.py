@@ -5,7 +5,9 @@ import json
 import jsonpath
 
 session = requests.session()
-response = session.get('https://api.caiyunapp.com/v2/aJkb6gTZrkEqnAQh/121.6544,25.1552/realtime?unit=metric:v2')
+# 浦东新区31.221517,121.544379
+response = session.get('https://api.caiyunapp.com/v2/aJkb6gTZrkEqnAQh/121.544379,31.221517/realtime?unit=metric:v2')
+# response = session.get('https://api.caiyunapp.com/v2/aJkb6gTZrkEqnAQh/121.6544,25.1552/realtime?unit=metric:v2')
 # print response.text
 js = json.loads(response.text)
 print js['result']
@@ -47,6 +49,7 @@ elif (wind_direct >= 292.5) and (wind_direct < 337.5):
     wd = u'西北'
 wind_speed = str(jsonpath.jsonpath(js, '$.result.wind.speed')[0])
 humidity = float(jsonpath.jsonpath(js, '$.result.humidity')[0])*100
+pressure = float(jsonpath.jsonpath(js, '$.result.pres')[0])/1000
 
 
 print u'温度: ' + tmp
@@ -57,5 +60,6 @@ print u'天气: ' + sky
 print u'降水: ' + rain + ' mm'
 print u'风向: ' + wd
 print u'风速: ' + wind_speed + ' km/h'
+print u'气压: ' + str(pressure) + ' kPa'
 
 
